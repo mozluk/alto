@@ -44,6 +44,8 @@ jobs:
     - uses: dtolnay/rust-toolchain@2c76c034f9e32a5d6e2c104dc4df23a22476db04 # nightly
     - name: Install udeps
       uses: taiki-e/install-action@674a16e7c46f534f2dcf29b1d19862f27b8c3484 # cargo-udeps
+      with:
+        tool: cargo-udeps
     - name: Check for unused dependencies
       run: cargo udeps --all-targets
 
@@ -64,6 +66,8 @@ jobs:
         cache-dependency-path: explorer/package-lock.json
     - name: Install wasm-pack
       uses: taiki-e/install-action@2bfba383ee9c46ecb3350ba359f2ef5cbcd14b24 # wasm-pack
+      with:
+        tool: wasm-pack
     - name: Install dependencies
       run: cd explorer && npm ci
     - name: Test compilation
@@ -86,5 +90,7 @@ jobs:
       run: cargo build --target wasm32-unknown-unknown --release --manifest-path types/Cargo.toml && du -h target/wasm32-unknown-unknown/release/alto_types.wasm
     - name: Install wasm-pack
       uses: taiki-e/install-action@2bfba383ee9c46ecb3350ba359f2ef5cbcd14b24 # wasm-pack
+      with:
+        tool: wasm-pack
     - name: Pack types
       run: wasm-pack build types --release --target web
